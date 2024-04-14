@@ -9,11 +9,13 @@ public class Bot
 {
     private TelegramBotClient _bot;
     private CancellationTokenSource _cts;
+    private TinkoffLinkGenerator _generator;
 
     public Bot(string botToken)
     {
         _bot = new(botToken);
         _cts = new();
+        _generator = new();
     }
 
     public void Start()
@@ -54,13 +56,15 @@ public class Bot
 
         long chatId = message.Chat.Id;
 
-        Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
-
-        // Echo received message text
-        Message sentMessage = await botClient.SendTextMessageAsync(
-            chatId: chatId,
-            text: "You said:\n" + messageText,
-            cancellationToken: cancellationToken);
+        if (messageText == "/generate")
+        {
+            string content = await _generator.GenerateLink();
+            await botClient.SendTextMessageAsync(
+                chatId: chatId,
+                text: content,
+                cancellationToken: cancellationToken
+            );
+        }
     }
 
     private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
