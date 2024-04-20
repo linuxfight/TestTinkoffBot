@@ -58,10 +58,10 @@ public class Bot
 
         if (messageText == "/generate")
         {
-            OrderResult content = await _generator.GenerateLink();
+            var content = await _generator.GenerateLink();
             await botClient.SendTextMessageAsync(
                 chatId: chatId,
-                text: content.Message,
+                text: content,
                 cancellationToken: cancellationToken
             );
         }
