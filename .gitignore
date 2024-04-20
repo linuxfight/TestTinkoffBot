@@ -483,6 +483,3 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-
-# tinkoff openapi file
-mapi.yaml
