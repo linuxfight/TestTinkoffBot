@@ -18,10 +18,9 @@ public static class TinkoffLinkGenerator
     
     private static string GetToken(Init_FULL init)
     {
-        Dictionary<string, object> initDictionary = new Dictionary<string, object>();
-        PropertyInfo[] properties = init.GetType().GetProperties();
-        foreach (var property in properties)
-            initDictionary[property.Name] = property.GetValue(init);
+        string initJson = JsonConvert.SerializeObject(init);
+        Dictionary<string, object> initDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(initJson);
+        initDictionary.Remove("Token");
         var initList = initDictionary.ToList().Select(x => (x.Key, x.Value)).ToList();
         initList.Add(("Password", "mm0b1ner9ztu118y"));
         initList.Sort((x, y) => string.Compare(x.Key, y.Key, StringComparison.Ordinal));
@@ -38,8 +37,9 @@ public static class TinkoffLinkGenerator
         Init_FULL init = new()
         {
             TerminalKey = "1699025675147DEMO",
-            Amount = 140000,
             OrderId = "2109023781937921",
+            Amount = 140000,
+            Token = "",
             Description = "Подарочная карта на 1000 рублей",
             Receipt = new()
             {
