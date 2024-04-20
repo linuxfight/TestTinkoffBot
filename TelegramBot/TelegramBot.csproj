@@ -11,6 +11,6 @@
     <PackageReference Include="Telegram.Bot" Version="19.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <OpenApiReference Include="mapi.yaml" SourceUrl="https://www.tinkoff.ru/kassa/dev/payments/mapi.yaml" />
+    <OpenApiReference Include="mapi.yaml" />
   </ItemGroup>
 </Project>

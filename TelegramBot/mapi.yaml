@@ -3493,8 +3493,6 @@ components:
     Common:
       type: object
       properties:
-        additionalProperties:
-          type: string
         OperationInitiatorType:
           type: string
           description: |
@@ -3560,110 +3558,6 @@ components:
           description: Признак проведения операции через Yandex Pay
           type: boolean
           example: true
-    LongPay1:
-      properties:
-        ticketNumber:
-          description: |
-            Номера билетов (с контрольной цифрой) для всех пассажиров, летящих по одному маршруту. В качестве разделителя используйте ';'<br>Необязателен, если передан параметр ticketReservationNumber
-          type: string
-        ticketReservationNumber:
-          description: |
-            Номера билетов (с контрольной цифрой) для всех пассажиров, летящих по одному маршруту. В качестве разделителя используйте ';'<br>Необязателен, если передан параметр ticketNumber
-          type: string
-        ticketSystem:
-          description: Код системы продажи
-          type: string
-        ticketAgencyCode:
-          description: Код агентства
-          type: string
-        ticketAgencyName:
-          description: Название агентства
-          type: string
-        ticketRestricted:
-          description: |
-            Ограничения билета:
-                    * 0 — без ограничений
-                    * 1 — невозвратный
-          type: string
-    LongPay2:
-      description: |
-        % — порядковый номер пассажира от 1 до 4
-      required:
-        - ticketPassengerSurname%
-        - ticketPassengerFirstname%
-      properties:
-        ticketPassengerSurname%:
-          description: Фамилия латиницей
-          type: string
-        ticketPassengerFirstname%:
-          description: Имя латиницей
-          type: string
-        passengerPassport%:
-          description: Серия и номер паспорта
-          type: string
-        passengerCountry%:
-          description: Гражданство. По стандарту ISO 3166-1 alpha-3
-          type: string
-        ticketPassengerBirthDate%:
-          description: Дата рождения. В формате YYYY-DD-MM
-          type: string
-    LongPay3:
-      description: \# — порядковый номер пассажира от 1 до 4
-      required:
-        - triplegDate#
-        - triplegCarrier#
-        - triplegDestinationFrom#
-        - triplegDestinationTo#
-      properties:
-        triplegDate#:
-          description: Дата вылета. В формате YYYY-DD-MM
-          type: string
-        triplegTime#:
-          description: Время вылета. В формате hh24:mm:ss
-          type: string
-        triplegCarrier#:
-          description: Код перевозчика ИАТА
-          type: string
-        triplegFlightNumber#:
-          description: Номер рейса
-          type: string
-        triplegClass#:
-          description: Класс перелета
-          type: string
-        triplegDestinationFrom#:
-          description: Код аэропорта вылета ИАТА
-          type: string
-        triplegDestinationTo#:
-          description: Код аэропорта прилета ИАТА
-          type: string
-        triplegCountryFrom#:
-          description: Код страны вылета. По стандарту ISO 3166-1 numeric
-          type: string
-        triplegCountryTo#:
-          description: Код страны прилета. По стандарту ISO 3166-1 numeric
-          type: string
-        triplegStopover#:
-          description: |
-            Остановка при пересадке:
-            * 0 — разрешена
-            * X — запрещена         
-          type: string
-        triplegFareBasisCode#:
-          description: Код тарифа
-          type: string
-    LongPay:
-      description: Расширенный набор параметров авиабилета передается при создании платежа (метод Init) в параметре DATA.
-      type: object
-      properties:
-        Параметры билета:
-          type: array
-          $ref: '#/components/schemas/LongPay1'
-        Параметры пассажира:
-          type: array
-          $ref: '#/components/schemas/LongPay2'
-        Параметры перелета:
-          type: array
-          $ref: '#/components/schemas/LongPay3'
     AgentData:
       type: object
       description: |
@@ -4771,7 +4665,6 @@ components:
             - $ref: '#/components/schemas/Common'
             - $ref: '#/components/schemas/TinkoffPay'
             - $ref: '#/components/schemas/YandexPay'
-            - $ref: '#/components/schemas/LongPay'
         Receipt:
           description: JSON-объект с данными чека. Обязателен, если подключена онлайн-касса.
           oneOf:
@@ -4947,7 +4840,6 @@ components:
             - $ref: '#/components/schemas/Common'
             - $ref: '#/components/schemas/TinkoffPay'
             - $ref: '#/components/schemas/YandexPay'
-            - $ref: '#/components/schemas/LongPay'
         Receipt:
           description: JSON объект с данными чека
           oneOf:

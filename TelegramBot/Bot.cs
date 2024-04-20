@@ -56,14 +56,38 @@ public class Bot
 
         long chatId = message.Chat.Id;
 
-        if (messageText == "/generate")
+        switch (messageText)
         {
-            var content = await _generator.GenerateLink();
-            await botClient.SendTextMessageAsync(
-                chatId: chatId,
-                text: content,
-                cancellationToken: cancellationToken
-            );
+            case "/start":
+                await botClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: "Привет, я бот для генерации ссылок на тинькофф",
+                    cancellationToken: cancellationToken
+                );
+                await botClient.SetMyCommandsAsync(
+                    commands: new List<BotCommand>()
+                    {
+                        new BotCommand()
+                        {
+                            Command = "start",
+                            Description = "Запустить бота"
+                        },
+                        new BotCommand()
+                        {
+                            Command = "generate",
+                            Description = "Сгенерировать ссылку"
+                        }
+                    }
+                );
+                break;
+            case "/generate":
+                var content = await _generator.GenerateLink();
+                await botClient.SendTextMessageAsync(
+                    chatId: chatId,
+                    text: content,
+                    cancellationToken: cancellationToken
+                );
+                break;
         }
     }
 
