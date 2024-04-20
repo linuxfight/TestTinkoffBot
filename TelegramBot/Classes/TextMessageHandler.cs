@@ -1,5 +1,6 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace TelegramBot.Classes;
 
@@ -37,7 +38,8 @@ public static class TextMessageHandler
                     await bot.SendTextMessageAsync(
                         chatId: message.Chat.Id,
                         text: $"Ссылка: [тык]({response.PaymentURL})",
-                        cancellationToken: cancellationToken
+                        cancellationToken: cancellationToken,
+                        parseMode: ParseMode.MarkdownV2
                     );    
                 }
                 else
