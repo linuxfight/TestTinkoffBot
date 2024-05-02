@@ -32,7 +32,12 @@ public static class TextMessageHandler
                     }, cancellationToken: cancellationToken);
                 break;
             case "/generate":
-                var response = await TinkoffLinkGenerator.GenerateLink();
+                var response = await TinkoffLinkGenerator.GenerateLink(
+                    price: 1400,
+                    description: "Test product",
+                    email: "a@test.ru",
+                    phoneNumber: "+79012345678"
+                    );
                 if (response.Success)
                 {
                     await bot.SendTextMessageAsync(

@@ -7,7 +7,7 @@ namespace TelegramBot.Classes;
 
 public class Bot(string botToken)
 {
-    private readonly TelegramBotClient _bot = new TelegramBotClient(botToken);
+    private readonly TelegramBotClient _bot = new(botToken);
     private readonly CancellationTokenSource _cancellationTokenSource = new();
 
     public void Start()

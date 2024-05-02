@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -19,33 +18,39 @@ public static class TinkoffLinkGenerator
     private static string GetToken(Init_FULL init)
     {
         string initJson = JsonConvert.SerializeObject(init);
-        Dictionary<string, object> initDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(initJson);
-        initDictionary.Remove("Token");
-        var initList = initDictionary.ToList().Select(x => (x.Key, x.Value)).ToList();
-        initList.Add(("Password", "mm0b1ner9ztu118y"));
-        initList.Sort((x, y) => string.Compare(x.Key, y.Key, StringComparison.Ordinal));
-        var initString = "";
-        foreach (var initItem in initList)
-            initString += initItem.Value;
-        return HashString(initString);
+        Dictionary<string, object>? initDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(initJson);
+        initDictionary?.Remove("Token");
+        if (initDictionary != null)
+        {
+            var initList = initDictionary.ToList().Select(x => (x.Key, x.Value)).ToList();
+            initList.Add(("Password", "mm0b1ner9ztu118y"));
+            initList.Sort((x, y) => string.Compare(x.Key, y.Key, StringComparison.Ordinal));
+            var initString = "";
+            foreach (var initItem in initList)
+                initString += initItem.Value;
+            return HashString(initString);
+        }
+
+        return "Error while hashing string";
     }
     
-    public static async Task<Response> GenerateLink()
+    public static async Task<Response> GenerateLink(double price, string description, string email, string phoneNumber)
     {
         using HttpClient http = new();
         mapiClient client = new(http);
+        string orderId = Guid.NewGuid().ToString();
         Init_FULL init = new()
         {
             TerminalKey = "1699025675147DEMO",
-            OrderId = "2109023781937921",
-            Amount = 140000,
+            OrderId = orderId,
+            Amount = price * 100,
             Token = "",
-            Description = "Подарочная карта на 1000 рублей",
+            Description = description,
             Receipt = new()
             {
-                Email = "a@test.ru",
-                Phone = "+79031234567",
-                Items = new List<Items_FFD_105>()
+                Email = email,
+                Phone = phoneNumber,
+                Items = new List<Items_FFD_105>
                 {
                     new()
                     {
