@@ -23,5 +23,5 @@ if (context.Database.GetPendingMigrations().Any())
 Bot bot = new(botToken, paymentsRepository, userRepository);
 bot.Start();
 await bot.GetInfo();
-Console.ReadLine();
+await Task.Delay(-1);
 bot.Stop();
