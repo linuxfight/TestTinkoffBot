@@ -1,0 +1,10 @@
+﻿services:
+  telegrambot:
+    image: ghcr.io/linuxfight/testtinkoffbot:master
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=YOURTELEGRAMBOTTOKENHERE
+    volumes:
+      - telegrambotdb:/app/Database
+volumes:
+  telegrambotdb:

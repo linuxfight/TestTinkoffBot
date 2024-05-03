@@ -2,7 +2,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace TelegramBot.Classes;
+namespace TelegramBot.Utilities;
 
 public static class TinkoffLinkGenerator
 {
@@ -54,28 +54,11 @@ public static class TinkoffLinkGenerator
                 {
                     new()
                     {
-                        Name = "Наименование товара 1",
-                        Price = 10000,
+                        Name = "Основной заказ",
+                        Price = price * 100,
                         Quantity = 1,
-                        Amount = 10000,
-                        Tax = Items_FFD_105Tax.Vat10,
-                        Ean13 = "303130323930303030630333435"
-                    },
-                    new()
-                    {
-                        Name = "Наименование товара 2",
-                        Price = 20000,
-                        Quantity = 2,
-                        Amount = 40000,
-                        Tax = Items_FFD_105Tax.Vat20
-                    },
-                    new()
-                    {
-                        Name = "Наименование товара 3",
-                        Price = 30000,
-                        Quantity = 3,
-                        Amount = 90000,
-                        Tax = Items_FFD_105Tax.Vat10
+                        Amount = price * 100,
+                        Tax = Items_FFD_105Tax.Vat0
                     }
                 }
             }
